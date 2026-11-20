@@ -296,6 +296,22 @@
     $(p[0]).checked = !!cfg[p[1]];
     $(p[0]).onchange = function () { cfg[p[1]] = this.checked; persist(); };
   });
+  // One-off: buy every affordable upgrade in the switched-on categories, cheapest first.
+  $('abBuyAll').onclick = function () {
+    if (!U.ready()) return U.toast('Game not loaded yet');
+    var n = 0;
+    for (var guard = 0; guard < 200; guard++) {
+      var ups = candidates().filter(function (c) { return c.kind === 'u' && c.price <= Game.cookies; })
+        .sort(function (a, b) { return a.price - b.price; });
+      if (!ups.length) break;
+      var c = ups[0], icon = iconOf(c), ok = false;
+      try { ok = buy(c); } catch (e) {}
+      if (!ok) { skipUntil[skipKey(c)] = Date.now() + 30000; continue; }
+      n++; bought++; last = c.name; notify(c, icon);
+    }
+    U.toast(n ? 'Bought ' + n + ' upgrade' + (n > 1 ? 's' : '') : 'No affordable upgrades right now');
+    refreshUI();
+  };
   $('abNotify').checked = !!cfg.notify;
   $('abNotify').onchange = function () { cfg.notify = this.checked; persist(); };
   $('abStrategy').value = cfg.strategy;

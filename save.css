@@ -1,25 +1,25 @@
 /* Toolbar */
 #ssPanel{position:fixed;right:8px;bottom:8px;z-index:2147483000;font:12px/1.35 Tahoma,Arial,sans-serif;color:#fff;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
-#ssPanel button,#ssSplash button{padding:5px 8px;border:1px solid #876;border-radius:4px;background:#3a2a1e;color:#fff;cursor:pointer;font:inherit}
-#ssPanel button:hover,#ssSplash button:hover{background:#5a3f2c}
+#ssPanel button,#ssSplash button{padding:5px 8px;border:1px solid #b06a82;border-radius:4px;background:#3d1a26;color:#fff;cursor:pointer;font:inherit}
+#ssPanel button:hover,#ssSplash button:hover{background:#6a2a40}
 #ssButtons{display:flex;gap:4px}
 #ssButtons button{font-size:16px;line-height:1;padding:6px 8px}
-.ssBody{display:none;background:rgba(0,0,0,.88);border:1px solid #876;border-radius:6px;padding:8px;width:180px}
+.ssBody{display:none;background:rgba(0,0,0,.88);border:1px solid #b06a82;border-radius:6px;padding:8px;width:180px}
 .ssBody.open{display:block}
 .ssBody button{display:block;width:100%;margin-top:5px;text-align:left}
-.ssHead{font-weight:bold;margin-bottom:4px;color:#fc6}
+.ssHead{font-weight:bold;margin-bottom:4px;color:#ff9ebb}
 .ssKey{float:right;opacity:.55}
 .ssRow{display:block;margin:6px 0;cursor:pointer}
 .ssHint{display:block;opacity:.6;margin-left:20px;font-size:11px}
-.ssRow select{background:#3a2a1e;color:#fff;border:1px solid #876;border-radius:3px;margin-left:4px}
+.ssRow select{background:#3d1a26;color:#fff;border:1px solid #b06a82;border-radius:3px;margin-left:4px}
 #ssStatus{opacity:.85}
-#ssToast{background:rgba(0,0,0,.88);border:1px solid #876;border-radius:6px;padding:5px 9px;opacity:0;transition:opacity .3s;pointer-events:none}
+#ssToast{background:rgba(0,0,0,.88);border:1px solid #b06a82;border-radius:6px;padding:5px 9px;opacity:0;transition:opacity .3s;pointer-events:none}
 #ssToast.show{opacity:1}
 
 /* Credits popup */
 #ssSplash{position:fixed;inset:0;z-index:2147483001;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;font:14px/1.4 Tahoma,Arial,sans-serif;color:#fff}
 #ssSplash[hidden]{display:none}
-#ssSplashBox{background:#2a1c14;border:2px solid #c0596b;border-radius:10px;padding:22px 26px;max-width:360px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.6)}
+#ssSplashBox{background:#2a1219;border:2px solid #c0596b;border-radius:10px;padding:22px 26px;max-width:360px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.6)}
 #ssSplashIcon{font-size:44px}
 #ssSplashBox h2{margin:6px 0 10px;color:#ff8fa3;font-size:20px}
 #ssSplashBox p{margin:0 0 14px;opacity:.85;font-size:13px}

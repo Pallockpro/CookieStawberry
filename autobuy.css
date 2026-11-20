@@ -1,8 +1,8 @@
 /* Auto Buy panel */
-#ssPanel .ab{width:300px;padding:0;overflow:hidden;max-height:78vh;overflow-y:auto;background:linear-gradient(#2b1d15,#1c130e);border:1px solid #a0705a;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.6)}
+#ssPanel .ab{width:300px;padding:0;overflow:hidden;max-height:78vh;overflow-y:auto;background:linear-gradient(#2e131c,#1c0c12);border:1px solid #c26b88;border-radius:10px;box-shadow:0 8px 28px rgba(0,0,0,.6)}
 #ssPanel .ab button{display:inline-block;width:auto;margin:0;text-align:center}
 
-.abHeader{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(90deg,#6b2d3a,#4a2a1e);border-bottom:1px solid #a0705a}
+.abHeader{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:linear-gradient(90deg,#6b2d3a,#5a1e30);border-bottom:1px solid #c26b88}
 .abTitle{font-size:15px;font-weight:bold;letter-spacing:.3px}
 .abSub{font-size:11px;opacity:.75}
 .abIsOn .abSub{color:#8f8;opacity:1}
@@ -10,7 +10,7 @@
 /* Toggle switch */
 .abSwitch{position:relative;display:inline-block;width:44px;height:24px;flex:none;cursor:pointer}
 .abSwitch input{position:absolute;opacity:0;width:0;height:0}
-.abSwitch>span{position:absolute;inset:0;background:#4a3a32;border-radius:12px;transition:background .2s;border:1px solid #876}
+.abSwitch>span{position:absolute;inset:0;background:#4a2a36;border-radius:12px;transition:background .2s;border:1px solid #b06a82}
 .abSwitch>span::before{content:"";position:absolute;width:18px;height:18px;left:2px;top:2px;background:#ddd;border-radius:50%;transition:transform .2s}
 .abSwitch input:checked+span{background:#3c9a4a;border-color:#7d7}
 .abSwitch input:checked+span::before{transform:translateX(20px);background:#fff}
@@ -19,18 +19,18 @@
 .abSwitch.sm input:checked+span::before{transform:translateX(16px)}
 
 /* Next target */
-.abTarget{padding:9px 12px;border-bottom:1px solid rgba(160,112,90,.4)}
+.abTarget{padding:9px 12px;border-bottom:1px solid rgba(194,107,136,.4)}
 .abTargetRow{display:flex;justify-content:space-between;gap:8px}
 .abTargetRow span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .abSmall{font-size:11px;opacity:.7;margin-top:4px}
-.abBar{height:7px;background:#3a2a22;border-radius:4px;margin-top:5px;overflow:hidden}
-.abBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e0a040,#ffd27a);border-radius:4px;transition:width .4s}
+.abBar{height:7px;background:#3a1a24;border-radius:4px;margin-top:5px;overflow:hidden}
+.abBar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff7aa2,#ffc2d4);border-radius:4px;transition:width .4s}
 
 /* Tabs */
 .abTabs{display:flex;padding:8px 10px 0;gap:4px}
 #ssPanel .ab .abTab{flex:1;padding:6px 0;background:transparent;border:1px solid transparent;border-bottom:none;border-radius:6px 6px 0 0;opacity:.65;font-weight:bold}
-#ssPanel .ab .abTab.on{background:#3a2a1e;border-color:#876;opacity:1;color:#fc6}
-.abPane{background:#3a2a1e;margin:0 10px 10px;padding:8px;border:1px solid #876;border-radius:0 0 8px 8px}
+#ssPanel .ab .abTab.on{background:#3d1a26;border-color:#b06a82;opacity:1;color:#ff9ebb}
+.abPane{background:#3d1a26;margin:0 10px 10px;padding:8px;border:1px solid #b06a82;border-radius:0 0 8px 8px}
 .abPane[hidden]{display:none}
 
 .abTools{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
@@ -39,12 +39,12 @@
 
 /* Building grid */
 .abGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-#ssPanel .ab .abTile{position:relative;display:flex;flex-direction:column;align-items:center;padding:6px 2px 5px;background:#2a1c14;border:2px solid #4a3a32;border-radius:8px;opacity:.5;filter:grayscale(.7);transition:opacity .15s,border-color .15s,transform .1s}
+#ssPanel .ab .abTile{position:relative;display:flex;flex-direction:column;align-items:center;padding:6px 2px 5px;background:#2a1219;border:2px solid #4a2a36;border-radius:8px;opacity:.5;filter:grayscale(.7);transition:opacity .15s,border-color .15s,transform .1s}
 #ssPanel .ab .abTile:active{transform:scale(.95)}
-#ssPanel .ab .abTile.on{opacity:1;filter:none;border-color:#e0a040;background:#3d2a1c}
+#ssPanel .ab .abTile.on{opacity:1;filter:none;border-color:#ff7aa2;background:#4a1e2c}
 #ssPanel .ab .abTile.on.afford{box-shadow:0 0 0 1px #7d7 inset}
 .abIcon{position:relative;width:48px;height:48px;overflow:hidden}
-.abSprite{display:block;width:64px;height:64px;transform:scale(.75);transform-origin:0 0;background-repeat:no-repeat;font:bold 40px/64px Georgia,serif;text-align:center;color:#fc6}
+.abSprite{display:block;width:64px;height:64px;transform:scale(.75);transform-origin:0 0;background-repeat:no-repeat;font:bold 40px/64px Georgia,serif;text-align:center;color:#ff9ebb}
 .abLock{display:none;position:absolute;right:0;bottom:0;font-size:16px;text-shadow:0 1px 2px #000}
 .abTile.locked .abSprite{filter:brightness(0) opacity(.55)}
 .abTile.locked .abLock{display:block}
@@ -56,12 +56,12 @@
 .abEmpty{grid-column:1/-1;text-align:center;opacity:.6;padding:12px 0}
 
 /* Rows (upgrades/extras) */
-.abRow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 2px;border-bottom:1px solid rgba(160,112,90,.25);cursor:pointer}
+.abRow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 2px;border-bottom:1px solid rgba(194,107,136,.25);cursor:pointer}
 .abRow:last-child{border-bottom:none}
 .abRow b{display:block;font-size:12px}
 .abRow small{display:block;font-size:10px;opacity:.6}
-.abRow select{background:#2a1c14;color:#fff;border:1px solid #876;border-radius:4px;padding:2px;max-width:120px}
-.abHead2{margin:10px 0 6px;font-weight:bold;color:#fc6}
+.abRow select{background:#2a1219;color:#fff;border:1px solid #b06a82;border-radius:4px;padding:2px;max-width:120px}
+.abHead2{margin:10px 0 6px;font-weight:bold;color:#ff9ebb}
 
 /* Upcoming upgrades */
 .abUp{display:flex;align-items:center;gap:6px;padding:3px 0}
@@ -78,7 +78,7 @@
 
 /* "Auto bought ..." notifications */
 #abNotes{position:fixed;top:40px;right:8px;z-index:2147483000;display:flex;flex-direction:column;align-items:flex-end;gap:6px;pointer-events:none;font:12px/1.25 Tahoma,Arial,sans-serif;color:#fff}
-.abNote{display:flex;align-items:center;gap:8px;min-width:170px;max-width:260px;padding:6px 10px 6px 6px;background:rgba(30,20,14,.92);border:1px solid #a0705a;border-left:3px solid #e0a040;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:abIn .25s ease-out}
+.abNote{display:flex;align-items:center;gap:8px;min-width:170px;max-width:260px;padding:6px 10px 6px 6px;background:rgba(40,14,24,.92);border:1px solid #c26b88;border-left:3px solid #ff7aa2;border-radius:8px;box-shadow:0 4px 14px rgba(0,0,0,.5);animation:abIn .25s ease-out}
 .abNote.out{opacity:0;transform:translateX(20px);transition:opacity .3s,transform .3s}
 @keyframes abIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
 .abNoteIcon{width:32px;height:32px;flex:none;overflow:hidden;position:relative;text-align:center;line-height:32px;font-size:20px}
@@ -87,7 +87,8 @@
 .abNoteSprite.small{width:48px;height:48px;transform:scale(.6667)}
 .abNoteText{flex:1;min-width:0}
 .abNoteText small{display:block;font-size:10px;opacity:.65;text-transform:uppercase;letter-spacing:.5px}
-.abNoteText b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ffd27a}
+.abNoteText b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#ffc2d4}
 .abNoteCount{font-weight:bold;color:#8f8}
 .abNote.bump{animation:abBump .35s ease-out}
 @keyframes abBump{0%{transform:scale(1)}40%{transform:scale(1.08);border-left-color:#8f8}100%{transform:scale(1)}}
+#ssPanel .ab .abBuyAll{display:block;width:100%;margin:8px 0 2px;padding:7px;background:#6a2a40;border:1px solid #ff7aa2;border-radius:6px;color:#fff;font-weight:bold}

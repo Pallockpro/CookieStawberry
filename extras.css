@@ -1,5 +1,5 @@
 /* Title bar (replaces the old link bar) */
-#topBar.ssTitleBar{display:flex!important;align-items:center;justify-content:center;height:32px;background:linear-gradient(90deg,#4a1622,#8a2b3c 50%,#4a1622)!important;border-bottom:1px solid #000;box-shadow:0 1px 6px rgba(0,0,0,.5);color:#fff;z-index:10}
+#topBar.ssTitleBar{display:flex!important;align-items:center;justify-content:center;height:32px;background:linear-gradient(90deg,#4a1622,#8a2b3c 50%,#4a1622);border-bottom:1px solid #000;box-shadow:0 1px 6px rgba(0,0,0,.5);color:#fff;z-index:10}
 #topBar.ssTitleBar>div{float:none;border:none;box-shadow:none;padding:0}
 .ssTitle{font:bold 17px/32px Georgia,'Times New Roman',serif;letter-spacing:.5px;text-shadow:0 1px 0 #000,0 0 8px rgba(255,120,150,.6);white-space:nowrap}
 .ssBerry{display:inline-block;animation:ssBob 2.4s ease-in-out infinite}
@@ -30,14 +30,14 @@ body.ssHideTop.ssHideTop #game{top:0!important}
 .ab.adOpen .adHeader{background:linear-gradient(90deg,#2d6b3a,#1e4a2a)}
 .adLogin{padding:12px}
 .adLogin label{display:block;margin-bottom:5px;font-weight:bold}
-.adLogin input,#adAmount{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #876;border-radius:5px;background:#1c130e;color:#fff;font-size:16px}
-#ssPanel .ab .adBtn{display:block;width:100%;padding:7px 4px;margin:0;background:#3a2a1e;border:1px solid #876;border-radius:5px;color:#fff;font:bold 12px Tahoma,Arial,sans-serif;text-align:center;cursor:pointer}
-#ssPanel .ab .adBtn:hover{background:#5a3f2c}
+.adLogin input,#adAmount{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #b06a82;border-radius:5px;background:#1c0c12;color:#fff;font-size:16px}
+#ssPanel .ab .adBtn{display:block;width:100%;padding:7px 4px;margin:0;background:#3d1a26;border:1px solid #b06a82;border-radius:5px;color:#fff;font:bold 12px Tahoma,Arial,sans-serif;text-align:center;cursor:pointer}
+#ssPanel .ab .adBtn:hover{background:#6a2a40}
 #ssPanel .ab .adBtn:active{transform:scale(.96)}
 #ssPanel .ab .adWide{margin-top:8px;background:#6b2d3a;border-color:#e88}
 .adErr{min-height:16px;margin-top:6px;color:#f88;font-size:12px}
 #adTools{padding:4px 10px 10px}
-.adSection{margin:10px 0 5px;font-weight:bold;color:#fc6;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.adSection{margin:10px 0 5px;font-weight:bold;color:#ff9ebb;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
 .adGrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .adRow{display:flex;gap:5px;margin-bottom:5px}
 .adRow #adAmount{flex:1}

@@ -15,12 +15,12 @@
 <script src="https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/old/base64.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/bobydob/JSEngine@135436abead1c966dde378e7e41fe832330b1f5a/dist/main.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/old/style.css" rel="stylesheet" type="text/css">
-<link href="save.css?v=13" rel="stylesheet" type="text/css">
-<link href="autobuy.css?v=13" rel="stylesheet" type="text/css">
-<link href="extras.css?v=13" rel="stylesheet" type="text/css">
-<link href="theme.css?v=13" rel="stylesheet" type="text/css">
+<link href="save.css?v=14" rel="stylesheet" type="text/css">
+<link href="autobuy.css?v=14" rel="stylesheet" type="text/css">
+<link href="extras.css?v=14" rel="stylesheet" type="text/css">
+<link href="theme.css?v=14" rel="stylesheet" type="text/css">
 </head>
-<body class="ssTheme">
+<body class="ssTheme ssStrawberry">
 <div id="wrapper"> <div id="topBar" class="ssTitleBar"><a id="ssFullPage" class="ssFullPage" href="https://pallockpro.github.io/CookieStawberry/" target="_blank" rel="noopener" hidden>&#x26F6; Full screen</a><div class="ssTitle"><span class="ssBerry">&#127827;</span> Strawberries Cookies Clicker <span class="ssBerry">&#127827;</span></div></div>
 <!-- The game looks these up by id when it starts; kept invisible so it doesn't crash. -->
 <div id="ssGameIds" hidden><a id="topbarOrteil"></a><a id="topbarDashnet"></a><a id="topbarTwitter"></a><a id="topbarTumblr"></a><a id="topbarDiscord"></a><a id="topbarMerch"></a><a id="topbarPatreon"></a><a id="topbarMobileCC"></a><a id="topbarRandomgen"></a><a id="topbarIGM"></a><div id="heralds"><div id="heraldsAmount"></div></div><a id="linkVersionLive"></a><a id="linkVersionBeta"></a><a id="linkVersionOld"></a></div>
@@ -65,6 +65,9 @@
     </label>
     <label class="ssRow"><input type="checkbox" id="ssShowFps"> Show FPS counter</label>
     <div class="ssHead ssGap">&#127827; Fun</div>
+    <label class="ssRow"><input type="checkbox" id="ssSkin"> Strawberry look <span class="ssHint">pink cookie, background and store</span></label>
+    <label class="ssRow"><input type="checkbox" id="ssMilk"> Strawberry milk</label>
+    <label class="ssRow"><input type="checkbox" id="ssGoldAlert"> Golden cookie alert <span class="ssHint">pops a message when one appears</span></label>
     <label class="ssRow">Strawberry cookies
       <select id="sbFreq"><option value="0">Off</option><option value="1">Normal</option><option value="2">Frequent</option></select>
       <span class="ssHint">bonus cookies that fly across the screen - tap them!</span>
@@ -113,6 +116,7 @@
       <label class="abRow"><span><b>Regular upgrades</b><small>Multipliers, clicking, kittens...</small></span><span class="abSwitch sm"><input type="checkbox" data-upg="regular"><span></span></span></label>
       <label class="abRow"><span><b>Cookie upgrades</b><small>Flavoured cookies (+% CPS)</small></span><span class="abSwitch sm"><input type="checkbox" data-upg="cookie"><span></span></span></label>
       <label class="abRow"><span><b>Research &#9888;</b><small>Grandma research - starts the grandmapocalypse!</small></span><span class="abSwitch sm"><input type="checkbox" data-upg="tech"><span></span></span></label>
+      <button class="adBtn abBuyAll" id="abBuyAll">&#128722; Buy all affordable upgrades now</button>
       <div class="abHead2">Up next in the store</div>
       <div class="abUpList" id="abUpList"><div class="abEmpty">No upgrades available yet</div></div>
     </div>
@@ -180,9 +184,10 @@
     <button id="ssSetBtn" title="Settings">&#9881;</button>
   </div>
 </div>
-<script src="save.js?v=13"></script>
-<script src="autobuy.js?v=13"></script>
-<script src="extras.js?v=13"></script>
-<script src="admin.js?v=13"></script>
+<script src="save.js?v=14"></script>
+<script src="autobuy.js?v=14"></script>
+<script src="extras.js?v=14"></script>
+<script src="admin.js?v=14"></script>
+<script src="strawberry.js?v=14"></script>
 </body>
 </html>

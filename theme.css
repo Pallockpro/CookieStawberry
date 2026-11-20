@@ -31,9 +31,24 @@ body.ssTheme .note{box-shadow:0 4px 14px rgba(0,0,0,.45)}
 /* Slim scrollbars (desktop browsers) */
 body.ssTheme #game ::-webkit-scrollbar{width:10px;height:10px}
 body.ssTheme #game ::-webkit-scrollbar-track{background:rgba(0,0,0,.25)}
-body.ssTheme #game ::-webkit-scrollbar-thumb{background:rgba(160,112,90,.7);border-radius:5px;border:2px solid rgba(0,0,0,.25)}
-body.ssTheme #game ::-webkit-scrollbar-thumb:hover{background:rgba(224,160,64,.85)}
-body.ssTheme #game *{scrollbar-color:rgba(160,112,90,.7) rgba(0,0,0,.25);scrollbar-width:thin}
+body.ssTheme #game ::-webkit-scrollbar-thumb{background:rgba(194,107,136,.7);border-radius:5px;border:2px solid rgba(0,0,0,.25)}
+body.ssTheme #game ::-webkit-scrollbar-thumb:hover{background:rgba(255,122,162,.85)}
+body.ssTheme #game *{scrollbar-color:rgba(194,107,136,.7) rgba(0,0,0,.25);scrollbar-width:thin}
 
 /* Fast mode keeps it cheap: no glows */
 body.ssTheme.ssFast #cookies,body.ssTheme.ssFast .zoneTitle{text-shadow:0 1px 0 #000}
+
+/* ===== Strawberry look (DOM parts; the canvas images are tinted by strawberry.js) ===== */
+/* Store tiles and menu panels get a strawberry wash; icons and text stay on top untouched */
+body.ssStrawberry .product::before{content:"";position:absolute;inset:0;background:rgba(255,95,145,.22);mix-blend-mode:multiply;pointer-events:none}
+body.ssStrawberry #storeTitle,body.ssStrawberry #buildingsTitle{color:#ffe0ea;text-shadow:0 1px 0 #000,0 0 10px rgba(255,105,150,.7)}
+body.ssStrawberry #bakeryName,body.ssStrawberry #cookies{color:#fff0f5}
+body.ssStrawberry #bakeryName{background:rgba(90,20,45,.55)}
+body.ssStrawberry #cookies{background:linear-gradient(90deg,rgba(90,20,45,0),rgba(90,20,45,.6) 18%,rgba(90,20,45,.6) 82%,rgba(90,20,45,0))}
+body.ssStrawberry #storeBulk,body.ssStrawberry #buildingsMaster{background-color:#3a1824}
+body.ssStrawberry .product.enabled .price,body.ssStrawberry .price.green{color:#9bff9b}
+body.ssStrawberry #versionNumber{color:#ffb3c8}
+
+/* Golden cookie alert flash on the title bar */
+#topBar.ssGoldFlash{animation:ssGold 2.4s ease-out}
+@keyframes ssGold{0%,30%,60%{background:linear-gradient(90deg,#8a6a1a,#f5c542 50%,#8a6a1a)}15%,45%,100%{background:linear-gradient(90deg,#4a1622,#8a2b3c 50%,#4a1622)}}
