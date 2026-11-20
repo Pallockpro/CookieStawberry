@@ -190,6 +190,15 @@
   try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
   if (embedded) { $('ssFullPage').hidden = false; document.body.classList.add('ssEmbedded'); }
 
+  // ---------- Polished look ----------
+  if (cfg.theme === undefined) cfg.theme = true;
+  document.body.classList.toggle('ssTheme', !!cfg.theme);
+  $('ssTheme').checked = !!cfg.theme;
+  $('ssTheme').onchange = function () {
+    cfg.theme = this.checked; persist();
+    document.body.classList.toggle('ssTheme', cfg.theme);
+  };
+
   $('sbFreq').value = String(cfg.freq);
   $('sbFreq').onchange = function () {
     cfg.freq = +this.value; persist();

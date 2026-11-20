@@ -6,7 +6,9 @@
   var SET_KEY = 'CookieStawberrySettings';
   var SPLASH_KEY = 'CookieStawberryHideSplash';
   // Game prefs fast mode turns off (only the ones this game version has are touched).
-  var FAST_PREFS = ['fancy', 'filters', 'particles', 'numbers', 'milk', 'cursors', 'wobbly', 'animate'];
+  // Not 'animate': with it off the game never draws the building scenes (they go black).
+  // The 'Building scenes' setting handles that instead.
+  var FAST_PREFS = ['fancy', 'filters', 'particles', 'numbers', 'milk', 'cursors', 'wobbly'];
 
   function $(id) { return document.getElementById(id); }
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -76,6 +78,11 @@
         persist();
       }
       FAST_PREFS.forEach(function (p) { if (p in Game.prefs) Game.prefs[p] = 0; });
+      // Undo older versions of fast mode that switched building animation off.
+      if (settings.savedPrefs.animate !== undefined) {
+        Game.prefs.animate = settings.savedPrefs.animate;
+        delete settings.savedPrefs.animate; persist();
+      }
     } else if (settings.savedPrefs) {
       for (var p in settings.savedPrefs) Game.prefs[p] = settings.savedPrefs[p];
       settings.savedPrefs = null; persist();

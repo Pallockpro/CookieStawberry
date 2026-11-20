@@ -1,0 +1,39 @@
+/* "Polished look": light touch-ups on top of the game's own theme.
+   Only colours, glows and shapes - no size changes, so the game's layout stays intact. */
+
+/* Cookie counter: soft band instead of a hard black strip, with a warm glow */
+body.ssTheme #cookies{background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.5) 18%,rgba(0,0,0,.5) 82%,rgba(0,0,0,0));text-shadow:0 1px 0 #000,0 0 10px rgba(255,200,120,.45)}
+body.ssTheme #bakeryName{border:1px solid rgba(255,255,255,.12);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:border-color .2s,text-shadow .2s}
+body.ssTheme #bakeryName:hover{border-color:rgba(255,143,163,.6);text-shadow:0 0 8px rgba(255,120,150,.8)}
+
+/* Menu buttons (Options / Stats / Info / Legacy) */
+body.ssTheme #comments .button{transition:color .15s,text-shadow .15s}
+body.ssTheme #comments .button:hover{color:#fff;text-shadow:0 1px 0 #000,0 0 8px rgba(255,143,163,.9)}
+
+/* Section titles */
+body.ssTheme .zoneTitle{letter-spacing:1px;text-shadow:0 1px 0 #000,0 0 10px rgba(255,143,163,.35)}
+
+/* Store: green edge on what you can afford, red-ish on what you can't */
+body.ssTheme .product{transition:opacity .25s ease-out,box-shadow .15s,filter .15s}
+body.ssTheme .product.enabled{box-shadow:inset 4px 0 0 #7fd88a}
+body.ssTheme .product.disabled{box-shadow:inset 4px 0 0 rgba(200,90,90,.55)}
+body.ssTheme .product.enabled:hover{box-shadow:inset 4px 0 0 #a6f0ae,0 0 16px #fff inset,0 0 1px #000}
+body.ssTheme .product.locked{box-shadow:none}
+
+/* Upgrade crates: gentle lift on hover */
+body.ssTheme .crate.upgrade{transition:transform .12s}
+body.ssTheme .crate.upgrade.enabled:hover{transform:translateY(-2px)}
+
+/* Popups, tooltips and prompts: a little softer */
+body.ssTheme #tooltip,body.ssTheme #prompt,body.ssTheme .note{border-radius:6px}
+body.ssTheme .note{box-shadow:0 4px 14px rgba(0,0,0,.45)}
+
+/* Slim scrollbars (desktop browsers) */
+body.ssTheme #game ::-webkit-scrollbar{width:10px;height:10px}
+body.ssTheme #game ::-webkit-scrollbar-track{background:rgba(0,0,0,.25)}
+body.ssTheme #game ::-webkit-scrollbar-thumb{background:rgba(160,112,90,.7);border-radius:5px;border:2px solid rgba(0,0,0,.25)}
+body.ssTheme #game ::-webkit-scrollbar-thumb:hover{background:rgba(224,160,64,.85)}
+body.ssTheme #game *{scrollbar-color:rgba(160,112,90,.7) rgba(0,0,0,.25);scrollbar-width:thin}
+
+/* Fast mode keeps it cheap: no glows */
+body.ssTheme.ssFast #cookies,body.ssTheme.ssFast .zoneTitle{text-shadow:0 1px 0 #000}
