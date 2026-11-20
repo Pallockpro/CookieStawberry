@@ -218,12 +218,14 @@
 
   // ---------- Toolbar ----------
   function togglePanel(id) {
-    ['ssSaveBody', 'ssSetBody'].forEach(function (b) {
+    ['ssSaveBody', 'ssSetBody', 'ssAutoBody'].forEach(function (b) {
       var el = $(b); el.classList.toggle('open', b === id ? !el.classList.contains('open') : false);
     });
   }
   $('ssSaveBtn').onclick = function () { togglePanel('ssSaveBody'); };
   $('ssSetBtn').onclick = function () { togglePanel('ssSetBody'); };
+  $('ssAutoBtn').onclick = function () { togglePanel('ssAutoBody'); };
+  window.SSUtil = { toast: toast, ready: ready, get: get, set: set };
 
   $('ssSave').onclick = function () { toast(saveNow() ? 'Game saved' : 'Game not loaded yet'); };
   $('ssExport').onclick = function () {
