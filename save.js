@@ -1,7 +1,8 @@
 // CookieStawberry extras: autosave + backup, save files, credits popup, settings (fast mode).
 (function () {
   var BACKUP_KEY = 'CookieStawberryBackup';
-  var GAME_KEY = 'CookieClickerGame';
+  // The game's own save slot (Game.SaveTo when available).
+  function gameKey() { return (typeof Game !== 'undefined' && Game && Game.SaveTo) || 'CookieClickerGame'; }
   var SET_KEY = 'CookieStawberrySettings';
   var SPLASH_KEY = 'CookieStawberryHideSplash';
   // Game prefs fast mode turns off (only the ones this game version has are touched).
@@ -27,7 +28,7 @@
   // ---------- Saving ----------
   function saveString() {
     try { var s = Game.WriteSave(1); if (s) return String(s); } catch (e) {}
-    return get(GAME_KEY);
+    return get(gameKey());
   }
   function loadString(str) {
     str = String(str || '').trim();
@@ -64,7 +65,6 @@
   }
   function applyFast() {
     document.body.classList.toggle('ssFast', !!settings.fast);
-  document.body.classList.toggle('ssHideRows', !!settings.hideRows);
     if (!ready() || !Game.prefs) return;
     if (settings.fast) {
       if (!settings.savedPrefs) {
@@ -168,7 +168,7 @@
     if (!ready()) return;
     clearInterval(waiter);
     var restored = false;
-    if (!get(GAME_KEY) && get(BACKUP_KEY)) restored = loadString(get(BACKUP_KEY));
+    if (!get(gameKey()) && get(BACKUP_KEY)) restored = loadString(get(BACKUP_KEY));
     applyPerf();
     status(restored ? 'Progress restored from backup' : 'Autosave on');
     startAutosave();

@@ -28,7 +28,8 @@
 #ssSplashBox button:hover{background:#d66b7d}
 
 /* Fast mode: drop purely visual layers */
-body.ssFast #particles,body.ssFast #sparkles,body.ssFast #cookieNumbers,body.ssFast #backgroundLeftCanvas{display:none!important}
+/* Note: never hide #backgroundLeftCanvas - the big cookie itself is drawn on it */
+body.ssFast #particles,body.ssFast #sparkles,body.ssFast #cookieNumbers{display:none!important}
 body.ssFast #sectionLeft *,body.ssFast #store *{transition:none!important}
 body.ssHideTop #topBar{display:none!important}
 body.ssHideTop #game{top:0!important}
@@ -45,6 +46,7 @@ html,body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 #game{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 
 /* Fast mode extras: shadows and filters are expensive on iPad */
-body.ssFast #game *{text-shadow:none!important;box-shadow:none!important;filter:none!important}
+body.ssFast #game *{text-shadow:none!important;box-shadow:none!important}
 /* Hide building scenes */
-body.ssHideRows #rows{display:none!important}
+/* Only the animated scenes; the rows also hold minigames (garden, grimoire...) */
+body.ssHideRows #rows canvas{visibility:hidden!important}
