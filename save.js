@@ -123,24 +123,26 @@
 
   // 3) Building scenes (the middle column): animated, low fps (redrawn ~1x per second), or hidden.
   var sceneDraws = null, sceneLast = {};
+  function wrapDraw(name, o) {
+    if (!o || typeof o.draw !== 'function' || o._ssWrapped) return;
+    var orig = o.draw;
+    o._ssWrapped = true;
+    o.draw = function () {
+      if (settings.scenes === 'off') return;
+      if (settings.scenes === 'low') {
+        var now = Date.now();
+        if (now - (sceneLast[name] || 0) < 1000) return;
+        sceneLast[name] = now;
+      }
+      return orig.apply(this, arguments);
+    };
+  }
   function applyRows() {
     document.body.classList.toggle('ssHideRows', settings.scenes === 'off');
     if (!ready() || !Game.Objects) return;
     if (!sceneDraws) {
-      sceneDraws = {};
-      for (var k in Game.Objects) (function (name, o) {
-        if (!o || typeof o.draw !== 'function') return;
-        var orig = sceneDraws[name] = o.draw;
-        o.draw = function () {
-          if (settings.scenes === 'off') return;
-          if (settings.scenes === 'low') {
-            var now = Date.now();
-            if (now - (sceneLast[name] || 0) < 1000) return;
-            sceneLast[name] = now;
-          }
-          return orig.apply(this, arguments);
-        };
-      })(k, Game.Objects[k]);
+      sceneDraws = true;
+      for (var k in Game.Objects) wrapDraw(k, Game.Objects[k]);
     }
     sceneLast = {}; // redraw straight away after a change
   }
@@ -242,7 +244,7 @@
   $('ssSetBtn').onclick = function () { togglePanel('ssSetBody'); };
   $('ssAutoBtn').onclick = function () { togglePanel('ssAutoBody'); };
   $('ssAdminBtn').onclick = function () { togglePanel('ssAdminBody'); };
-  window.SSUtil = { toast: toast, ready: ready, get: get, set: set, togglePanel: togglePanel };
+  window.SSUtil = { toast: toast, ready: ready, get: get, set: set, togglePanel: togglePanel, wrapDraw: wrapDraw };
 
   $('ssSave').onclick = function () { toast(saveNow() ? 'Game saved' : 'Game not loaded yet'); };
   $('ssExport').onclick = function () {

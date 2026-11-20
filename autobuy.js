@@ -173,6 +173,7 @@
       if (!ok) { skipUntil[skipKey(target)] = Date.now() + 30000; continue; }
       bought++; last = target.name;
       notify(target, icon);
+      try { window.dispatchEvent(new Event('ss:autobought')); } catch (e) {}
     }
   }
   setInterval(tick, 250);
@@ -193,7 +194,7 @@
   function buildGrid() {
     var objs = Game.ObjectsById || [];
     if (!objs.length) return false;
-    var grid = $('abGrid'); grid.innerHTML = '';
+    var grid = $('abGrid'); grid.innerHTML = ''; tiles = {};
     objs.forEach(function (o) {
       var t = document.createElement('button');
       t.className = 'abTile';
@@ -264,7 +265,7 @@
   function refreshUI() {
     refreshStatus();
     if (!$('ssAutoBody').classList.contains('open') || !U.ready()) return;
-    if (!gridBuilt) gridBuilt = buildGrid();
+    if (!gridBuilt || Object.keys(tiles).length !== (Game.ObjectsById || []).length) gridBuilt = buildGrid();
     (Game.ObjectsById || []).forEach(refreshTile);
     if (!$('abPaneU').hidden) refreshUpgrades();
   }

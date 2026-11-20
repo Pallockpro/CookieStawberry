@@ -52,3 +52,7 @@ body.ssStrawberry #versionNumber{color:#ffb3c8}
 /* Golden cookie alert flash on the title bar */
 #topBar.ssGoldFlash{animation:ssGold 2.4s ease-out}
 @keyframes ssGold{0%,30%,60%{background:linear-gradient(90deg,#8a6a1a,#f5c542 50%,#8a6a1a)}15%,45%,100%{background:linear-gradient(90deg,#4a1622,#8a2b3c 50%,#4a1622)}}
+
+/* Fix: this copy's building sheet has no Idleverse picture, so borrow it from the icon sheet (scaled 48px -> 64px) */
+#productIcon17,#productIconOff17{background-image:url(https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/img/icons.png)!important;background-size:2240px 2304px!important;background-position:-2112px 0!important}
+.product.locked #productIcon17{filter:brightness(0) opacity(.7)}

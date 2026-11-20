@@ -15,10 +15,10 @@
 <script src="https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/old/base64.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/bobydob/JSEngine@135436abead1c966dde378e7e41fe832330b1f5a/dist/main.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/old/style.css" rel="stylesheet" type="text/css">
-<link href="save.css?v=14" rel="stylesheet" type="text/css">
-<link href="autobuy.css?v=14" rel="stylesheet" type="text/css">
-<link href="extras.css?v=14" rel="stylesheet" type="text/css">
-<link href="theme.css?v=14" rel="stylesheet" type="text/css">
+<link href="save.css?v=16" rel="stylesheet" type="text/css">
+<link href="autobuy.css?v=16" rel="stylesheet" type="text/css">
+<link href="extras.css?v=16" rel="stylesheet" type="text/css">
+<link href="theme.css?v=16" rel="stylesheet" type="text/css">
 </head>
 <body class="ssTheme ssStrawberry">
 <div id="wrapper"> <div id="topBar" class="ssTitleBar"><a id="ssFullPage" class="ssFullPage" href="https://pallockpro.github.io/CookieStawberry/" target="_blank" rel="noopener" hidden>&#x26F6; Full screen</a><div class="ssTitle"><span class="ssBerry">&#127827;</span> Strawberries Cookies Clicker <span class="ssBerry">&#127827;</span></div></div>
@@ -51,6 +51,7 @@
     <input type="file" id="ssFile" accept=".txt,text/plain" hidden>
   </div>
   <div class="ssBody" id="ssSetBody">
+    <div class="ssSetTop"><span class="ssSetTitle">&#9881; Settings</span><button id="ssAdminBtn">&#128272; Admin</button></div>
     <div class="ssHead">Performance</div>
     <button id="ssBoost">&#9889; iPad boost (one tap)</button>
     <label class="ssRow"><input type="checkbox" id="ssFast"> Fast mode <span class="ssHint">turns off effects &amp; shadows</span></label>
@@ -85,7 +86,6 @@
     <label class="ssRow"><input type="checkbox" id="ssHideTop"> Hide title bar</label>
     <label class="ssRow"><input type="checkbox" id="ssShortNotes"> Auto-close game popups <span class="ssHint">achievements etc. close after 6s</span></label>
     <button id="ssCredits">Show credits</button>
-    <button id="ssAdminBtn">&#128272; Admin</button>
   </div>
   <div class="ssBody ab" id="ssAutoBody">
     <div class="abHeader">
@@ -162,6 +162,12 @@
         <button class="adBtn" data-ad="double">&times;2 bank</button>
         <button class="adBtn" data-ad="lumps">+10 sugar lumps</button>
       </div>
+      <div class="adSection">Buildings</div>
+      <div class="adRow">
+        <select id="adBuilding"><option>Loading...</option></select>
+        <input type="text" id="adBuildingAmt" value="10" inputmode="numeric" autocomplete="off">
+        <button class="adBtn" data-ad="building">Give</button>
+      </div>
       <div class="adSection">Buffs</div>
       <div class="adGrid">
         <button class="adBtn" data-ad="frenzy">Frenzy &times;7</button>
@@ -184,10 +190,11 @@
     <button id="ssSetBtn" title="Settings">&#9881;</button>
   </div>
 </div>
-<script src="save.js?v=14"></script>
-<script src="autobuy.js?v=14"></script>
-<script src="extras.js?v=14"></script>
-<script src="admin.js?v=14"></script>
-<script src="strawberry.js?v=14"></script>
+<script src="save.js?v=16"></script>
+<script src="autobuy.js?v=16"></script>
+<script src="extras.js?v=16"></script>
+<script src="admin.js?v=16"></script>
+<script src="strawberry.js?v=16"></script>
+<script src="content.js?v=16"></script>
 </body>
 </html>

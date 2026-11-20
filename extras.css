@@ -48,3 +48,5 @@ body.ssHideTop.ssHideTop #game{top:0!important}
 body.ssEmbedded #ssPanel{top:1px;bottom:auto;flex-direction:column-reverse}
 body.ssEmbedded #ssButtons button{padding:4px 8px;font-size:15px}
 body.ssEmbedded #abNotes{top:44px}
+#adBuilding{flex:1;min-width:0;padding:6px;border:1px solid #b06a82;border-radius:5px;background:#1c0c12;color:#fff;font-size:16px}
+#adBuildingAmt{width:64px;box-sizing:border-box;padding:6px;border:1px solid #b06a82;border-radius:5px;background:#1c0c12;color:#fff;font-size:16px}

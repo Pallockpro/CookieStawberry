@@ -53,3 +53,6 @@ body.ssHideRows #rows canvas{visibility:hidden!important}
 
 /* iOS zooms in when focusing a field under 16px: keep them at 16px on touch screens */
 @media (pointer:coarse){input,select,textarea{font-size:16px!important}}
+.ssSetTop{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid rgba(194,107,136,.4)}
+.ssSetTitle{font-weight:bold;font-size:13px}
+#ssPanel .ssSetTop #ssAdminBtn{display:inline-block;width:auto;margin:0;padding:4px 9px}

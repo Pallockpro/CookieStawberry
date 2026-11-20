@@ -100,6 +100,7 @@
     burst(text, r.left + r.width / 2, r.top + r.height / 2);
     U.toast('🍓 ' + text);
     cfg.caught++; persist(); showStats();
+    try { window.dispatchEvent(new CustomEvent('ss:strawberry', { detail: { caught: true, frenzy: /frenzy/i.test(text) } })); } catch (err) {}
     c.el.classList.add('sbGone');
     c.el.style.transform += ' scale(1.6)';
     setTimeout(function () { c.el.remove(); }, 400);
@@ -109,6 +110,7 @@
     c.done = true;
     c.el.remove();
     cfg.missed++; persist(); showStats();
+    try { window.dispatchEvent(new CustomEvent('ss:strawberry', { detail: { caught: false } })); } catch (err) {}
   }
 
   // Lets Auto Buy pop these too.

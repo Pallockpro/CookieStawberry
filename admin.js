@@ -79,6 +79,12 @@
       Game.CollectWrinklers(); U.toast(n ? 'Popped ' + n + ' wrinkler' + (n > 1 ? 's' : '') : 'No wrinklers to pop');
     },
     chips: function () { Game.heavenlyChips += 100; U.toast('+100 heavenly chips'); },
+    building: function () {
+      var name = $('adBuilding').value, n = Math.floor(parseAmount($('adBuildingAmt').value || '1'));
+      if (!(n > 0) || n > 100000) return U.toast('Enter how many (1 to 100,000)');
+      if (window.SSContent && SSContent.give(name, n)) U.toast('+' + n + ' ' + name + (n > 1 ? 's' : ''));
+      else U.toast('Could not give ' + name);
+    },
     goldtimer: function () {
       var g = Game.shimmerTypes.golden;
       g.time = Math.max(g.time, g.maxTime - Game.fps * 3);
@@ -90,10 +96,18 @@
     btn.onclick = function () {
       if (sessionGet() !== '1') return setUnlocked(false);
       if (!U.ready()) return U.toast('Game not loaded yet');
-      try { actions[btn.getAttribute('data-ad')](); } catch (e) { U.toast('That didn\'t work: ' + e.message); }
+      try { actions[btn.getAttribute('data-ad')](); window.dispatchEvent(new Event('ss:admin')); } catch (e) { U.toast('That didn\'t work: ' + e.message); }
     };
   });
   $('adAmount').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); actions.give(); } });
 
+  // Fill the building list once the game (and the Claude building) is ready.
+  var fill = setInterval(function () {
+    if (!U.ready() || !Game.ObjectsById || !(window.SSContent && Game.Objects[SSContent.claudeName])) return;
+    clearInterval(fill);
+    var sel = $('adBuilding');
+    sel.innerHTML = Game.ObjectsById.map(function (o) { return '<option value="' + o.name + '">' + (o.dname || o.name) + '</option>'; }).join('');
+    sel.value = SSContent.claudeName;
+  }, 700);
   setUnlocked(sessionGet() === '1');
 })();
