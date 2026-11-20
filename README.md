@@ -13,12 +13,14 @@ Strawberries Cookies Clicker - Cookie Clicker hosted with GitHub Pages, with ext
   - **⚡ iPad boost**: one tap turns on everything below that reduces lag.
   - **Fast mode**: turns off visual effects, shadows and filters.
   - **Mute click sounds**: biggest fix for lag while tapping the cookie on iPad.
-  - **Hide building scenes**: hides and stops drawing the animated building rows (biggest saver).
+  - **Building scenes**: Animated, Low FPS (redrawn about once a second, ~10x less work) or Hidden.
   - **Smooth frame pacing**: runs the game loop on the screen's refresh instead of a jittery timer.
   - **Frame rate**: 30 fps (game default) or 60 fps (smoother, same game speed, more CPU).
   - **FPS counter**: green = hitting target, yellow/red = dropping frames.
 - **🍓 Fun** (in ⚙):
   - **Strawberry cookies**: bonus cookies that fly across the screen. Tap one for a pile of cookies (1-3 min of CPS) or a frenzy. Miss it and it's gone. Off / Normal / Frequent.
   - **Golden cookies**: Normal, 2× or 4× more often (normally one every 5-15 minutes), plus a countdown to the next one.
-- **Other**: autosave interval, hide the title bar, show the credits popup again.
+- **Other**: autosave interval, hide the title bar, auto-close the game's achievement popups, show the credits popup again.
+- **🔐 Admin** (in ⚙, password protected): spawn strawberry/golden/wrath cookies and reindeer, give cookies (`5000`, `2.5m`, `1b`...), +1 hour/day of CPS, ×2 bank, sugar lumps, buffs (frenzy, click frenzy, dragonflight, elder frenzy), pop wrinklers, heavenly chips, golden cookie soon. Stays unlocked until the tab is closed. Note: it's a lock for a single-player game, not real security.
+- **Embedded on another site** (e.g. Google Sites): a **⛶ Full screen** button opens the game on its own page, and the 🤖 💾 ⚙ buttons move into the title bar so they're always reachable.
 - **iPad**: pinch and double-tap zoom are blocked so the page never zooms by accident; *Share → Add to Home Screen* opens it full screen.

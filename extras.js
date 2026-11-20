@@ -112,7 +112,7 @@
   }
 
   // Lets Auto Buy pop these too.
-  window.SSStraw = { popAll: function () { flying.slice().forEach(function (c) { if (!c.done) catchIt(c); }); } };
+  window.SSStraw = { spawn: function () { spawn(); }, popAll: function () { flying.slice().forEach(function (c) { if (!c.done) catchIt(c); }); } };
 
   setInterval(function () {
     if (!+cfg.freq || busy()) { nextSpawn = Math.max(nextSpawn, Date.now() + 5000); return; }
@@ -165,6 +165,30 @@
     try { Game.GrabData = function () {}; } catch (e) {}
   }, 500);
   setInterval(function () { if ($('ssSetBody').classList.contains('open')) goldInfo(); }, 1000);
+
+  // ---------- Auto-close game popups (the game's own "short notifications" option) ----------
+  function applyShortNotes() {
+    if (!U.ready() || !Game.prefs || cfg.shortNotes === undefined) return;
+    Game.prefs.notifs = cfg.shortNotes ? 1 : 0;
+  }
+  var notesWaiter = setInterval(function () {
+    if (!U.ready()) return;
+    clearInterval(notesWaiter);
+    if (cfg.shortNotes === undefined) cfg.shortNotes = !!Game.prefs.notifs;
+    applyShortNotes();
+    $('ssShortNotes').checked = !!cfg.shortNotes;
+  }, 500);
+  $('ssShortNotes').onchange = function () {
+    cfg.shortNotes = this.checked; persist(); applyShortNotes();
+    if (cfg.shortNotes && Game.CloseNotes) try { Game.CloseNotes(); } catch (e) {}
+    U.toast('Game popups ' + (cfg.shortNotes ? 'auto-close' : 'stay open'));
+  };
+
+  // ---------- Embedded in another site (e.g. Google Sites) ----------
+  // Show a button to open the game on its own page, where it gets the whole screen.
+  var embedded = false;
+  try { embedded = window.self !== window.top; } catch (e) { embedded = true; }
+  if (embedded) { $('ssFullPage').hidden = false; document.body.classList.add('ssEmbedded'); }
 
   $('sbFreq').value = String(cfg.freq);
   $('sbFreq').onchange = function () {

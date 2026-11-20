@@ -14,8 +14,11 @@
   function ready() { return typeof Game !== 'undefined' && Game && Game.ready && typeof Game.WriteSave === 'function'; }
 
   var settings = { fast: false, interval: 30, hideTop: false, savedPrefs: null,
-    hideRows: false, smooth: true, fps: 30, showFps: false, muteClicks: false };
+    scenes: 'full', smooth: true, fps: 30, showFps: false, muteClicks: false };
   try { var s = JSON.parse(get(SET_KEY) || '{}'); for (var k in s) settings[k] = s[k]; } catch (e) {}
+  // Older versions had an on/off "hide building scenes"; show them at low fps instead of blank.
+  if (settings.hideRows !== undefined) { if (settings.hideRows) settings.scenes = 'low'; delete settings.hideRows; }
+  if (['full', 'low', 'off'].indexOf(settings.scenes) < 0) settings.scenes = 'full';
   function persist() { set(SET_KEY, JSON.stringify(settings)); }
 
   var toastTimer;
@@ -111,22 +114,28 @@
     if (Game.fps !== f) Game.fps = f;
   }
 
-  // 3) Hide building scenes: hide the rows and stop drawing them.
-  var rowDraws = null;
+  // 3) Building scenes (the middle column): animated, low fps (redrawn ~1x per second), or hidden.
+  var sceneDraws = null, sceneLast = {};
   function applyRows() {
-    document.body.classList.toggle('ssHideRows', !!settings.hideRows);
+    document.body.classList.toggle('ssHideRows', settings.scenes === 'off');
     if (!ready() || !Game.Objects) return;
-    if (settings.hideRows && !rowDraws) {
-      rowDraws = {};
-      for (var k in Game.Objects) {
-        var o = Game.Objects[k];
-        if (o && typeof o.draw === 'function') { rowDraws[k] = o.draw; o.draw = function () {}; }
-      }
-    } else if (!settings.hideRows && rowDraws) {
-      for (var n in rowDraws) Game.Objects[n].draw = rowDraws[n];
-      rowDraws = null;
-      try { for (var m in Game.Objects) if (Game.Objects[m].refresh) Game.Objects[m].refresh(); } catch (e) {}
+    if (!sceneDraws) {
+      sceneDraws = {};
+      for (var k in Game.Objects) (function (name, o) {
+        if (!o || typeof o.draw !== 'function') return;
+        var orig = sceneDraws[name] = o.draw;
+        o.draw = function () {
+          if (settings.scenes === 'off') return;
+          if (settings.scenes === 'low') {
+            var now = Date.now();
+            if (now - (sceneLast[name] || 0) < 1000) return;
+            sceneLast[name] = now;
+          }
+          return orig.apply(this, arguments);
+        };
+      })(k, Game.Objects[k]);
     }
+    sceneLast = {}; // redraw straight away after a change
   }
 
   // 4) FPS counter (counts real frames the game draws).
@@ -183,7 +192,7 @@
   // ---------- Startup ----------
   applyHideTop();
   document.body.classList.toggle('ssFast', !!settings.fast);
-  document.body.classList.toggle('ssHideRows', !!settings.hideRows);
+  document.body.classList.toggle('ssHideRows', settings.scenes === 'off');
   var waiter = setInterval(function () {
     if (!ready()) return;
     clearInterval(waiter);
@@ -218,14 +227,15 @@
 
   // ---------- Toolbar ----------
   function togglePanel(id) {
-    ['ssSaveBody', 'ssSetBody', 'ssAutoBody'].forEach(function (b) {
+    ['ssSaveBody', 'ssSetBody', 'ssAutoBody', 'ssAdminBody'].forEach(function (b) {
       var el = $(b); el.classList.toggle('open', b === id ? !el.classList.contains('open') : false);
     });
   }
   $('ssSaveBtn').onclick = function () { togglePanel('ssSaveBody'); };
   $('ssSetBtn').onclick = function () { togglePanel('ssSetBody'); };
   $('ssAutoBtn').onclick = function () { togglePanel('ssAutoBody'); };
-  window.SSUtil = { toast: toast, ready: ready, get: get, set: set };
+  $('ssAdminBtn').onclick = function () { togglePanel('ssAdminBody'); };
+  window.SSUtil = { toast: toast, ready: ready, get: get, set: set, togglePanel: togglePanel };
 
   $('ssSave').onclick = function () { toast(saveNow() ? 'Game saved' : 'Game not loaded yet'); };
   $('ssExport').onclick = function () {
@@ -251,20 +261,20 @@
 
   function syncUI() {
     $('ssFast').checked = !!settings.fast;
-    $('ssHideRows').checked = !!settings.hideRows;
+    $('ssScenes').value = settings.scenes;
     $('ssSmooth').checked = !!settings.smooth;
     $('ssFps').value = String(settings.fps);
     $('ssShowFps').checked = !!settings.showFps;
     $('ssMuteClicks').checked = !!settings.muteClicks;
   }
   syncUI();
-  $('ssHideRows').onchange = function () { settings.hideRows = this.checked; persist(); applyRows(); };
+  $('ssScenes').onchange = function () { settings.scenes = this.value; persist(); applyRows(); toast('Building scenes: ' + this.options[this.selectedIndex].text); };
   $('ssSmooth').onchange = function () { settings.smooth = this.checked; persist(); toast('Smooth pacing ' + (this.checked ? 'on' : 'off')); };
   $('ssFps').onchange = function () { settings.fps = +this.value; persist(); applyFps(); toast(this.value + ' fps'); };
   $('ssMuteClicks').onchange = function () { settings.muteClicks = this.checked; persist(); hookSound(); toast('Click sounds ' + (this.checked ? 'muted' : 'on')); };
   $('ssShowFps').onchange = function () { settings.showFps = this.checked; persist(); };
   $('ssBoost').onclick = function () {
-    settings.fast = true; settings.hideRows = true; settings.smooth = true; settings.showFps = true; settings.muteClicks = true;
+    settings.fast = true; settings.scenes = 'low'; settings.smooth = true; settings.showFps = true; settings.muteClicks = true;
     persist(); applyPerf(); syncUI();
     toast('Boost on - try 60 fps if the counter stays green');
   };

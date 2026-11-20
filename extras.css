@@ -20,3 +20,31 @@ body.ssHideTop.ssHideTop #game{top:0!important}
 .sbCookie.sbGone{pointer-events:none;transition:opacity .35s,transform .35s;opacity:0}
 .sbBurst{position:fixed;z-index:2147482001;pointer-events:none;font:bold 18px/1.2 Georgia,serif;color:#ffd0dc;text-shadow:0 1px 0 #000,0 0 6px #ff4d7a;white-space:nowrap;transform:translate(-50%,-50%);animation:sbRise 1.6s ease-out forwards}
 @keyframes sbRise{0%{opacity:0;margin-top:0}15%{opacity:1}100%{opacity:0;margin-top:-60px}}
+
+/* "Full screen" link, shown only when the game is embedded in another page */
+.ssFullPage{position:absolute;left:8px;top:5px;padding:3px 9px;border:1px solid #e88;border-radius:5px;background:rgba(0,0,0,.35);color:#fff!important;text-decoration:none;font:bold 12px/18px Tahoma,Arial,sans-serif}
+.ssFullPage[hidden]{display:none}
+
+/* Admin panel */
+.adHeader{background:linear-gradient(90deg,#2d3a6b,#1e2a4a)}
+.ab.adOpen .adHeader{background:linear-gradient(90deg,#2d6b3a,#1e4a2a)}
+.adLogin{padding:12px}
+.adLogin label{display:block;margin-bottom:5px;font-weight:bold}
+.adLogin input,#adAmount{width:100%;box-sizing:border-box;padding:7px 8px;border:1px solid #876;border-radius:5px;background:#1c130e;color:#fff;font-size:16px}
+#ssPanel .ab .adBtn{display:block;width:100%;padding:7px 4px;margin:0;background:#3a2a1e;border:1px solid #876;border-radius:5px;color:#fff;font:bold 12px Tahoma,Arial,sans-serif;text-align:center;cursor:pointer}
+#ssPanel .ab .adBtn:hover{background:#5a3f2c}
+#ssPanel .ab .adBtn:active{transform:scale(.96)}
+#ssPanel .ab .adWide{margin-top:8px;background:#6b2d3a;border-color:#e88}
+.adErr{min-height:16px;margin-top:6px;color:#f88;font-size:12px}
+#adTools{padding:4px 10px 10px}
+.adSection{margin:10px 0 5px;font-weight:bold;color:#fc6;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+.adGrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.adRow{display:flex;gap:5px;margin-bottom:5px}
+.adRow #adAmount{flex:1}
+#ssPanel .ab .adRow .adBtn{width:auto;padding:7px 14px}
+#ssAdminBtn{background:#2d3a6b!important}
+
+/* Embedded (e.g. Google Sites): the frame's bottom is often off screen, so put the buttons in the title bar */
+body.ssEmbedded #ssPanel{top:1px;bottom:auto;flex-direction:column-reverse}
+body.ssEmbedded #ssButtons button{padding:4px 8px;font-size:15px}
+body.ssEmbedded #abNotes{top:44px}
