@@ -5,14 +5,23 @@
   function $(id) { return document.getElementById(id); }
 
   var cfg = { on: false, buildings: {}, upg: { regular: true, cookie: true, tech: false },
-    golden: false, wrath: false, reindeer: false, strategy: 'value', reserve: 0 };
+    golden: false, wrath: false, reindeer: false, strategy: 'value', reserve: 0, notify: true };
   try {
     var saved = JSON.parse(U.get(KEY) || '{}');
-    for (var k in saved) cfg[k] = saved[k];
+    for (var k in saved) {
+      if ((k === 'upg' || k === 'buildings') && saved[k] && typeof saved[k] === 'object') {
+        for (var j in saved[k]) cfg[k][j] = saved[k][j];
+      } else cfg[k] = saved[k];
+    }
+    if (cfg.notify === undefined) cfg.notify = true;
   } catch (e) {}
   function persist() { U.set(KEY, JSON.stringify(cfg)); }
 
   var bought = 0, last = '', target = null;
+  // Items the game refused to sell us get skipped for a while so one stuck item can't block everything.
+  var skipUntil = {};
+  function skipKey(c) { return c.kind + ':' + (c.obj.id !== undefined ? c.obj.id : c.name); }
+  function skipped(c) { return (skipUntil[skipKey(c)] || 0) > Date.now(); }
 
   function fmt(n) {
     try { if (typeof Beautify === 'function') return Beautify(n); } catch (e) {}
@@ -27,6 +36,7 @@
   function upgCat(u) {
     if (!u || u.bought) return null;
     if (Game.vault && Game.vault.indexOf(u.id) >= 0) return null;
+    if (u.priceLumps > 0 || u.lumpCost > 0) return null; // costs sugar lumps, not cookies
     if (u.pool === 'cookie') return 'cookie';
     if (u.pool === 'tech') return 'tech';
     if (!u.pool) return u.clickFunction ? null : 'regular'; // anything that pops a prompt is skipped
@@ -50,7 +60,7 @@
       if (!c || !cfg.upg[c]) return;
       list.push({ kind: 'u', obj: u, name: u.dname || u.name, price: uPrice(u), tech: c === 'tech' });
     });
-    return list;
+    return list.filter(function (c) { return isFinite(c.price) && c.price >= 0 && !skipped(c); });
   }
 
   function pickTarget() {
@@ -81,6 +91,45 @@
     return !!t.obj.bought;
   }
 
+  function iconOf(c) {
+    var id = c.kind === 'b' ? 'productIcon' + c.obj.id : 'upgrade' + (Game.UpgradesInStore || []).indexOf(c.obj);
+    var el = document.getElementById(id);
+    if (!el) return null;
+    var cs = getComputedStyle(el);
+    if (!cs.backgroundImage || cs.backgroundImage === 'none') return null;
+    return { img: cs.backgroundImage, pos: cs.backgroundPosition, big: c.kind === 'b' };
+  }
+
+  // Small "Auto bought ..." notifications, top right. Repeats of the same item are grouped.
+  var notes = {};
+  function notify(c, icon) {
+    if (!cfg.notify) return;
+    var box = $('abNotes'), k = skipKey(c), n = notes[k];
+    if (n && n.el.parentNode) {
+      n.count++;
+      n.el.querySelector('.abNoteCount').textContent = '\u00D7' + n.count;
+      clearTimeout(n.timer);
+    } else {
+      var el = document.createElement('div');
+      el.className = 'abNote';
+      el.innerHTML = '<span class="abNoteIcon"><span class="abNoteSprite"></span></span>' +
+        '<span class="abNoteText"><small>Auto bought</small><b></b></span><span class="abNoteCount"></span>';
+      el.querySelector('b').textContent = c.name;
+      var sp = el.querySelector('.abNoteSprite');
+      if (icon) {
+        sp.style.backgroundImage = icon.img; sp.style.backgroundPosition = icon.pos;
+        sp.classList.add(icon.big ? 'big' : 'small');
+      } else sp.textContent = c.kind === 'b' ? '\uD83C\uDFED' : '\u2B06';
+      box.insertBefore(el, box.firstChild);
+      while (box.children.length > 4) box.removeChild(box.lastChild);
+      n = notes[k] = { el: el, count: 1 };
+    }
+    n.timer = setTimeout(function () {
+      n.el.classList.add('out');
+      setTimeout(function () { if (n.el.parentNode) n.el.parentNode.removeChild(n.el); if (notes[k] === n) delete notes[k]; }, 300);
+    }, 2500);
+  }
+
   function popShimmers() {
     if (!Game.shimmers || !(cfg.golden || cfg.reindeer)) return;
     Game.shimmers.slice().forEach(function (s) {
@@ -98,10 +147,11 @@
     for (var i = 0; i < 10; i++) {
       target = pickTarget();
       if (!target || Game.cookies - reserve() < target.price) break;
-      var ok = false;
+      var ok = false, icon = iconOf(target);
       try { ok = buy(target); } catch (e) {}
-      if (!ok) break;
+      if (!ok) { skipUntil[skipKey(target)] = Date.now() + 30000; continue; }
       bought++; last = target.name;
+      notify(target, icon);
     }
   }
   setInterval(tick, 250);
@@ -225,6 +275,8 @@
     $(p[0]).checked = !!cfg[p[1]];
     $(p[0]).onchange = function () { cfg[p[1]] = this.checked; persist(); };
   });
+  $('abNotify').checked = !!cfg.notify;
+  $('abNotify').onchange = function () { cfg.notify = this.checked; persist(); };
   $('abStrategy').value = cfg.strategy;
   $('abStrategy').onchange = function () { cfg.strategy = this.value; persist(); refreshUI(); };
   $('abReserve').value = String(cfg.reserve);

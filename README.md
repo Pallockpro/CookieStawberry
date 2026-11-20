@@ -8,7 +8,7 @@ Cookie Clicker page hosted with GitHub Pages. Made by Strawberries.
   - **Buildings**: tap tiles to choose which buildings get bought. Locked buildings show a 🔒 until you unlock them.
   - **Upgrades**: regular and cookie upgrades on/off; research (grandmapocalypse) is off by default. Toggle upgrades like Elder Pledge are never auto-bought.
   - **Extras**: auto-click golden cookies (optionally wrath cookies) and reindeer, buying strategy (best value / cheapest first), and a bank reserve so it never spends your Lucky combo cookies.
-  - Shows what it's saving for next with a progress bar.
+  - Shows what it's saving for next with a progress bar, and a small "Auto bought ..." notification in the top right for each purchase (can be turned off in Extras).
 - **⚙ Performance**:
   - **⚡ iPad boost**: one tap turns on everything below that reduces lag.
   - **Fast mode**: turns off visual effects, shadows and filters.
