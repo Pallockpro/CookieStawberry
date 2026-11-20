@@ -1,6 +1,6 @@
 # CookieStawberry 🍓
 
-Cookie Clicker page hosted with GitHub Pages. Made by Strawberries.
+Strawberries Cookies Clicker - Cookie Clicker hosted with GitHub Pages, with extras. Made by Strawberries.
 
 - **Autosave**: progress saves in your browser automatically (every 10/30/60s, your pick) and whenever you leave the page, with a backup copy.
 - **💾 Saves**: save now (or press Ctrl+S), download a save file, or load one back in.
@@ -17,5 +17,8 @@ Cookie Clicker page hosted with GitHub Pages. Made by Strawberries.
   - **Smooth frame pacing**: runs the game loop on the screen's refresh instead of a jittery timer.
   - **Frame rate**: 30 fps (game default) or 60 fps (smoother, same game speed, more CPU).
   - **FPS counter**: green = hitting target, yellow/red = dropping frames.
-- **Other**: autosave interval, hide the top link bar, show the credits popup again.
+- **🍓 Fun** (in ⚙):
+  - **Strawberry cookies**: bonus cookies that fly across the screen. Tap one for a pile of cookies (1-3 min of CPS) or a frenzy. Miss it and it's gone. Off / Normal / Frequent.
+  - **Golden cookies**: Normal, 2× or 4× more often (normally one every 5-15 minutes), plus a countdown to the next one.
+- **Other**: autosave interval, hide the title bar, show the credits popup again.
 - **iPad**: pinch and double-tap zoom are blocked so the page never zooms by accident; *Share → Add to Home Screen* opens it full screen.

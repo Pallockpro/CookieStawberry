@@ -5,7 +5,7 @@
   function $(id) { return document.getElementById(id); }
 
   var cfg = { on: false, buildings: {}, upg: { regular: true, cookie: true, tech: false },
-    golden: false, wrath: false, reindeer: false, strategy: 'value', reserve: 0, notify: true };
+    golden: false, wrath: false, reindeer: false, straw: false, strategy: 'value', reserve: 0, notify: true };
   try {
     var saved = JSON.parse(U.get(KEY) || '{}');
     for (var k in saved) {
@@ -151,6 +151,7 @@
   }
 
   function popShimmers() {
+    if (cfg.straw && window.SSStraw) { try { SSStraw.popAll(); } catch (e) {} }
     if (!Game.shimmers || !(cfg.golden || cfg.reindeer)) return;
     Game.shimmers.slice().forEach(function (s) {
       try {
@@ -291,7 +292,7 @@
     cb.checked = !!cfg.upg[c];
     cb.onchange = function () { cfg.upg[c] = this.checked; persist(); refreshUI(); };
   });
-  [['abGolden', 'golden'], ['abWrath', 'wrath'], ['abReindeer', 'reindeer']].forEach(function (p) {
+  [['abGolden', 'golden'], ['abWrath', 'wrath'], ['abReindeer', 'reindeer'], ['abStraw', 'straw']].forEach(function (p) {
     $(p[0]).checked = !!cfg[p[1]];
     $(p[0]).onchange = function () { cfg[p[1]] = this.checked; persist(); };
   });

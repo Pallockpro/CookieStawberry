@@ -38,7 +38,7 @@ body.ssHideTop #game{top:0!important}
 #ssSetBody{max-height:80vh;overflow-y:auto}
 
 /* FPS counter */
-#ssFpsMeter{position:fixed;left:6px;bottom:6px;z-index:2147483000;background:rgba(0,0,0,.75);color:#7f7;font:bold 12px/1 monospace;padding:4px 6px;border-radius:4px;pointer-events:none}
+#ssFpsMeter{position:fixed;left:6px;top:38px;z-index:2147483000;background:rgba(0,0,0,.75);color:#7f7;font:bold 12px/1 monospace;padding:4px 6px;border-radius:4px;pointer-events:none}
 #ssFpsMeter.mid{color:#fd5}#ssFpsMeter.low{color:#f66}
 
 /* Touch: no double-tap zoom / tap delay / text selection when tapping fast */

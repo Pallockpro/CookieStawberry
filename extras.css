@@ -1,0 +1,22 @@
+/* Title bar (replaces the old link bar) */
+#topBar.ssTitleBar{display:flex!important;align-items:center;justify-content:center;height:32px;background:linear-gradient(90deg,#4a1622,#8a2b3c 50%,#4a1622)!important;border-bottom:1px solid #000;box-shadow:0 1px 6px rgba(0,0,0,.5);color:#fff;z-index:10}
+#topBar.ssTitleBar>div{float:none;border:none;box-shadow:none;padding:0}
+.ssTitle{font:bold 17px/32px Georgia,'Times New Roman',serif;letter-spacing:.5px;text-shadow:0 1px 0 #000,0 0 8px rgba(255,120,150,.6);white-space:nowrap}
+.ssBerry{display:inline-block;animation:ssBob 2.4s ease-in-out infinite}
+.ssBerry:last-child{animation-delay:1.2s}
+@keyframes ssBob{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-2px) rotate(8deg)}}
+body.ssFast .ssBerry{animation:none}
+/* The game hides the bar in its narrow "mobile" layout; keep ours visible there too */
+.mobile #topBar.ssTitleBar{display:flex!important}
+.mobile #game{top:32px!important}
+body.ssHideTop #topBar.ssTitleBar{display:none!important}
+body.ssHideTop.ssHideTop #game{top:0!important}
+
+/* Flying strawberry cookies */
+#sbLayer{position:fixed;inset:0;z-index:2147482000;pointer-events:none;overflow:hidden}
+.sbCookie{position:absolute;left:0;top:0;width:72px;height:72px;margin:-36px 0 0 -36px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto;will-change:transform;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.sbCookie .sbImg{position:absolute;inset:4px;border-radius:50%;background:center/contain no-repeat;filter:hue-rotate(-50deg) saturate(1.6) drop-shadow(0 0 8px rgba(255,90,130,.9))}
+.sbCookie .sbBerry{position:absolute;right:-2px;top:-4px;font-size:26px;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+.sbCookie.sbGone{pointer-events:none;transition:opacity .35s,transform .35s;opacity:0}
+.sbBurst{position:fixed;z-index:2147482001;pointer-events:none;font:bold 18px/1.2 Georgia,serif;color:#ffd0dc;text-shadow:0 1px 0 #000,0 0 6px #ff4d7a;white-space:nowrap;transform:translate(-50%,-50%);animation:sbRise 1.6s ease-out forwards}
+@keyframes sbRise{0%{opacity:0;margin-top:0}15%{opacity:1}100%{opacity:0;margin-top:-60px}}
