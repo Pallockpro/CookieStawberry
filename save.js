@@ -12,7 +12,8 @@
   function set(k, v) { try { localStorage.setItem(k, v); return true; } catch (e) { return false; } }
   function ready() { return typeof Game !== 'undefined' && Game && Game.ready && typeof Game.WriteSave === 'function'; }
 
-  var settings = { fast: false, interval: 30, hideTop: false, savedPrefs: null };
+  var settings = { fast: false, interval: 30, hideTop: false, savedPrefs: null,
+    hideRows: false, smooth: true, fps: 30, showFps: false };
   try { var s = JSON.parse(get(SET_KEY) || '{}'); for (var k in s) settings[k] = s[k]; } catch (e) {}
   function persist() { set(SET_KEY, JSON.stringify(settings)); }
 
@@ -36,7 +37,7 @@
       else Game.LoadSave(str);
       Game.WriteSave();
       set(BACKUP_KEY, str);
-      applyFast(); // a loaded save brings its own prefs back
+      applyPerf(); // a loaded save brings its own prefs back
       return true;
     } catch (e) { return false; }
   }
@@ -63,6 +64,7 @@
   }
   function applyFast() {
     document.body.classList.toggle('ssFast', !!settings.fast);
+  document.body.classList.toggle('ssHideRows', !!settings.hideRows);
     if (!ready() || !Game.prefs) return;
     if (settings.fast) {
       if (!settings.savedPrefs) {
@@ -78,6 +80,76 @@
     refreshGame();
   }
 
+
+  // ---------- Performance ----------
+  // 1) Smooth frame pacing: the game schedules its loop with setTimeout, which
+  //    jitters badly on iPad Safari. Route it through requestAnimationFrame
+  //    (throttled to the game's fps so 120Hz screens don't speed the game up).
+  var nativeTimeout = window.setTimeout;
+  var lastLoop = 0;
+  window.setTimeout = function (fn, delay) {
+    if (settings.smooth && !document.hidden && typeof Game !== 'undefined' && Game && fn === Game.Loop
+        && typeof requestAnimationFrame === 'function') {
+      var step = 1000 / (Game.fps || 30);
+      var tick = function (now) {
+        if (document.hidden) { nativeTimeout(fn, 0); return; }
+        if (now - lastLoop < step - 2) { requestAnimationFrame(tick); return; }
+        lastLoop = now;
+        fn();
+      };
+      requestAnimationFrame(tick);
+      return 0;
+    }
+    return nativeTimeout.apply(window, arguments);
+  };
+
+  // 2) Frame rate. Everything in the game scales with Game.fps, so 60 makes it
+  //    smoother without changing game speed (but costs more CPU).
+  function applyFps() {
+    if (!ready()) return;
+    var f = +settings.fps === 60 ? 60 : 30;
+    if (Game.fps !== f) Game.fps = f;
+  }
+
+  // 3) Hide building scenes: hide the rows and stop drawing them.
+  var rowDraws = null;
+  function applyRows() {
+    document.body.classList.toggle('ssHideRows', !!settings.hideRows);
+    if (!ready() || !Game.Objects) return;
+    if (settings.hideRows && !rowDraws) {
+      rowDraws = {};
+      for (var k in Game.Objects) {
+        var o = Game.Objects[k];
+        if (o && typeof o.draw === 'function') { rowDraws[k] = o.draw; o.draw = function () {}; }
+      }
+    } else if (!settings.hideRows && rowDraws) {
+      for (var n in rowDraws) Game.Objects[n].draw = rowDraws[n];
+      rowDraws = null;
+      try { for (var m in Game.Objects) if (Game.Objects[m].refresh) Game.Objects[m].refresh(); } catch (e) {}
+    }
+  }
+
+  // 4) FPS counter (counts real frames the game draws).
+  var frames = 0, drawHooked = false;
+  function hookDraw() {
+    if (drawHooked || !ready() || typeof Game.Draw !== 'function') return;
+    var d = Game.Draw;
+    Game.Draw = function () { frames++; return d.apply(this, arguments); };
+    drawHooked = true;
+  }
+  setInterval(function () {
+    var m = $('ssFpsMeter');
+    m.hidden = !settings.showFps;
+    if (settings.showFps && drawHooked) {
+      var target = ready() ? Game.fps : 30;
+      m.textContent = frames + ' / ' + target + ' fps';
+      m.className = frames >= target * 0.9 ? '' : frames >= target * 0.7 ? 'mid' : 'low';
+    }
+    frames = 0;
+  }, 1000);
+
+  function applyPerf() { applyFast(); applyRows(); applyFps(); hookDraw(); }
+
   function applyHideTop() { document.body.classList.toggle('ssHideTop', !!settings.hideTop); }
 
   // ---------- Credits popup ----------
@@ -91,12 +163,13 @@
   // ---------- Startup ----------
   applyHideTop();
   document.body.classList.toggle('ssFast', !!settings.fast);
+  document.body.classList.toggle('ssHideRows', !!settings.hideRows);
   var waiter = setInterval(function () {
     if (!ready()) return;
     clearInterval(waiter);
     var restored = false;
     if (!get(GAME_KEY) && get(BACKUP_KEY)) restored = loadString(get(BACKUP_KEY));
-    applyFast();
+    applyPerf();
     status(restored ? 'Progress restored from backup' : 'Autosave on');
     startAutosave();
   }, 500);
@@ -140,7 +213,24 @@
     r.readAsText(f);
   };
 
-  $('ssFast').checked = !!settings.fast;
+
+  function syncUI() {
+    $('ssFast').checked = !!settings.fast;
+    $('ssHideRows').checked = !!settings.hideRows;
+    $('ssSmooth').checked = !!settings.smooth;
+    $('ssFps').value = String(settings.fps);
+    $('ssShowFps').checked = !!settings.showFps;
+  }
+  syncUI();
+  $('ssHideRows').onchange = function () { settings.hideRows = this.checked; persist(); applyRows(); };
+  $('ssSmooth').onchange = function () { settings.smooth = this.checked; persist(); toast('Smooth pacing ' + (this.checked ? 'on' : 'off')); };
+  $('ssFps').onchange = function () { settings.fps = +this.value; persist(); applyFps(); toast(this.value + ' fps'); };
+  $('ssShowFps').onchange = function () { settings.showFps = this.checked; persist(); };
+  $('ssBoost').onclick = function () {
+    settings.fast = true; settings.hideRows = true; settings.smooth = true; settings.showFps = true;
+    persist(); applyPerf(); syncUI();
+    toast('Boost on - try 60 fps if the counter stays green');
+  };
   $('ssFast').onchange = function () {
     settings.fast = this.checked; persist(); applyFast();
     toast('Fast mode ' + (settings.fast ? 'on' : 'off'));

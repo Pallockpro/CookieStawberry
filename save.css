@@ -32,3 +32,19 @@ body.ssFast #particles,body.ssFast #sparkles,body.ssFast #cookieNumbers,body.ssF
 body.ssFast #sectionLeft *,body.ssFast #store *{transition:none!important}
 body.ssHideTop #topBar{display:none!important}
 body.ssHideTop #game{top:0!important}
+.ssGap{margin-top:10px}
+#ssBoost{background:#6b2d3a!important;border-color:#e88!important;font-weight:bold}
+#ssSetBody{max-height:80vh;overflow-y:auto}
+
+/* FPS counter */
+#ssFpsMeter{position:fixed;left:6px;bottom:6px;z-index:1000000;background:rgba(0,0,0,.75);color:#7f7;font:bold 12px/1 monospace;padding:4px 6px;border-radius:4px;pointer-events:none}
+#ssFpsMeter.mid{color:#fd5}#ssFpsMeter.low{color:#f66}
+
+/* Touch: no double-tap zoom / tap delay / text selection when tapping fast */
+html,body{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#game{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+
+/* Fast mode extras: shadows and filters are expensive on iPad */
+body.ssFast #game *{text-shadow:none!important;box-shadow:none!important;filter:none!important}
+/* Hide building scenes */
+body.ssHideRows #rows{display:none!important}

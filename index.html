@@ -7,6 +7,11 @@
 <title>Cookie Clicker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8D%AA%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=900, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Cookies">
+<meta name="theme-color" content="#2a1c14">
 <script src="https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/old/base64.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/bobydob/JSEngine@135436abead1c966dde378e7e41fe832330b1f5a/dist/main.js"></script>
 <link href="https://cdn.jsdelivr.net/gh/bcat1023/webprx@8b966f57aeceb9616de5f15455d811ab76df9c8f/gfiles/cookies/old/style.css" rel="stylesheet" type="text/css">
@@ -27,6 +32,7 @@
 </div>
 
 <!-- Toolbar: saves + settings -->
+<div id="ssFpsMeter" hidden>-- fps</div>
 <div id="ssPanel">
   <div id="ssToast"></div>
   <div class="ssBody" id="ssSaveBody">
@@ -38,8 +44,16 @@
     <input type="file" id="ssFile" accept=".txt,text/plain" hidden>
   </div>
   <div class="ssBody" id="ssSetBody">
-    <div class="ssHead">Settings</div>
-    <label class="ssRow"><input type="checkbox" id="ssFast"> Fast mode <span class="ssHint">less effects, less lag</span></label>
+    <div class="ssHead">Performance</div>
+    <button id="ssBoost">&#9889; iPad boost (one tap)</button>
+    <label class="ssRow"><input type="checkbox" id="ssFast"> Fast mode <span class="ssHint">turns off effects &amp; shadows</span></label>
+    <label class="ssRow"><input type="checkbox" id="ssHideRows"> Hide building scenes <span class="ssHint">biggest lag saver</span></label>
+    <label class="ssRow"><input type="checkbox" id="ssSmooth"> Smooth frame pacing <span class="ssHint">syncs to the screen refresh</span></label>
+    <label class="ssRow">Frame rate
+      <select id="ssFps"><option value="30">30 fps (default)</option><option value="60">60 fps</option></select>
+    </label>
+    <label class="ssRow"><input type="checkbox" id="ssShowFps"> Show FPS counter</label>
+    <div class="ssHead ssGap">Other</div>
     <label class="ssRow">Autosave every
       <select id="ssInterval"><option value="10">10s</option><option value="30">30s</option><option value="60">60s</option></select>
     </label>
