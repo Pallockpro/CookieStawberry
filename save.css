@@ -1,0 +1,7 @@
+#ssPanel{position:fixed;right:8px;bottom:8px;z-index:1000000;font:12px/1.3 Tahoma,Arial,sans-serif;color:#fff}
+#ssPanel button{display:block;width:100%;margin:4px 0 0;padding:5px 8px;border:1px solid #876;border-radius:4px;background:#3a2a1e;color:#fff;cursor:pointer;font:inherit}
+#ssPanel button:hover{background:#5a3f2c}
+#ssToggle{width:auto!important;margin-left:auto!important;font-size:16px!important}
+#ssBody{display:none;background:rgba(0,0,0,.85);border:1px solid #876;border-radius:6px;padding:8px;margin-top:4px;width:150px}
+#ssPanel.open #ssBody{display:block}
+#ssStatus{opacity:.85}
