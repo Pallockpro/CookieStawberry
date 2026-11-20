@@ -14,7 +14,7 @@
   function ready() { return typeof Game !== 'undefined' && Game && Game.ready && typeof Game.WriteSave === 'function'; }
 
   var settings = { fast: false, interval: 30, hideTop: false, savedPrefs: null,
-    hideRows: false, smooth: true, fps: 30, showFps: false };
+    hideRows: false, smooth: true, fps: 30, showFps: false, muteClicks: false };
   try { var s = JSON.parse(get(SET_KEY) || '{}'); for (var k in s) settings[k] = s[k]; } catch (e) {}
   function persist() { set(SET_KEY, JSON.stringify(settings)); }
 
@@ -148,7 +148,27 @@
     frames = 0;
   }, 1000);
 
-  function applyPerf() { applyFast(); applyRows(); applyFps(); hookDraw(); }
+  // 5) Mute click sounds. iPad Safari is slow at starting a sound on every tap,
+  //    which is the main source of lag while clicking the cookie.
+  var soundHooked = false;
+  function isClickSound(url) { return /click/i.test(String(url || '')); }
+  function hookSound() {
+    if (soundHooked || !ready()) return;
+    if (typeof window.PlaySound === 'function') {
+      var ps = window.PlaySound;
+      window.PlaySound = function (url) {
+        if (settings.muteClicks && isClickSound(url)) return;
+        return ps.apply(this, arguments);
+      };
+    }
+    if (typeof Game.playCookieClickSound === 'function') {
+      var pc = Game.playCookieClickSound;
+      Game.playCookieClickSound = function () { if (!settings.muteClicks) return pc.apply(this, arguments); };
+    }
+    soundHooked = true;
+  }
+
+  function applyPerf() { applyFast(); applyRows(); applyFps(); hookDraw(); hookSound(); }
 
   function applyHideTop() { document.body.classList.toggle('ssHideTop', !!settings.hideTop); }
 
@@ -182,6 +202,19 @@
       e.preventDefault(); toast(saveNow() ? 'Game saved' : 'Game not loaded yet');
     }
   });
+
+
+  // ---------- No accidental zoom on phones/tablets ----------
+  // iOS ignores user-scalable=no, so block pinch and double-tap zoom directly.
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { e.preventDefault(); }, { passive: false });
+  });
+  document.addEventListener('touchmove', function (e) {
+    if (e.touches.length > 1 || (e.scale && e.scale !== 1)) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('dblclick', function (e) { e.preventDefault(); }, { passive: false });
+  // Trackpad pinch / Ctrl + wheel zoom
+  document.addEventListener('wheel', function (e) { if (e.ctrlKey) e.preventDefault(); }, { passive: false });
 
   // ---------- Toolbar ----------
   function togglePanel(id) {
@@ -220,14 +253,16 @@
     $('ssSmooth').checked = !!settings.smooth;
     $('ssFps').value = String(settings.fps);
     $('ssShowFps').checked = !!settings.showFps;
+    $('ssMuteClicks').checked = !!settings.muteClicks;
   }
   syncUI();
   $('ssHideRows').onchange = function () { settings.hideRows = this.checked; persist(); applyRows(); };
   $('ssSmooth').onchange = function () { settings.smooth = this.checked; persist(); toast('Smooth pacing ' + (this.checked ? 'on' : 'off')); };
   $('ssFps').onchange = function () { settings.fps = +this.value; persist(); applyFps(); toast(this.value + ' fps'); };
+  $('ssMuteClicks').onchange = function () { settings.muteClicks = this.checked; persist(); hookSound(); toast('Click sounds ' + (this.checked ? 'muted' : 'on')); };
   $('ssShowFps').onchange = function () { settings.showFps = this.checked; persist(); };
   $('ssBoost').onclick = function () {
-    settings.fast = true; settings.hideRows = true; settings.smooth = true; settings.showFps = true;
+    settings.fast = true; settings.hideRows = true; settings.smooth = true; settings.showFps = true; settings.muteClicks = true;
     persist(); applyPerf(); syncUI();
     toast('Boost on - try 60 fps if the counter stays green');
   };

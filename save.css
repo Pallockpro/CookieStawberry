@@ -50,3 +50,6 @@ body.ssFast #game *{text-shadow:none!important;box-shadow:none!important}
 /* Hide building scenes */
 /* Only the animated scenes; the rows also hold minigames (garden, grimoire...) */
 body.ssHideRows #rows canvas{visibility:hidden!important}
+
+/* iOS zooms in when focusing a field under 16px: keep them at 16px on touch screens */
+@media (pointer:coarse){input,select,textarea{font-size:16px!important}}
