@@ -13,7 +13,7 @@
         for (var j in saved[k]) cfg[k][j] = saved[k][j];
       } else cfg[k] = saved[k];
     }
-    if (cfg.notify === undefined) cfg.notify = true;
+    if (typeof cfg.notify !== 'boolean') cfg.notify = true;
   } catch (e) {}
   function persist() { U.set(KEY, JSON.stringify(cfg)); }
 
@@ -102,12 +102,32 @@
 
   // Small "Auto bought ..." notifications, top right. Repeats of the same item are grouped.
   var notes = {};
+  // The box is created here if the page is missing it (e.g. an old cached index.html).
+  function notesBox() {
+    var box = $('abNotes');
+    if (!box) {
+      box = document.createElement('div');
+      box.id = 'abNotes';
+      document.body.appendChild(box);
+    }
+    // Inline fallback so it shows top-right above the game even if the stylesheet is stale.
+    var st = box.style;
+    st.position = 'fixed'; st.top = '40px'; st.right = '8px'; st.zIndex = '2147483000';
+    st.display = 'flex'; st.flexDirection = 'column'; st.alignItems = 'flex-end'; st.gap = '6px';
+    st.pointerEvents = 'none';
+    return box;
+  }
   function notify(c, icon) {
+    try { showNote(c, icon); } catch (e) {} // a display problem must never stop buying
+  }
+  function showNote(c, icon) {
     if (!cfg.notify) return;
-    var box = $('abNotes'), k = skipKey(c), n = notes[k];
-    if (n && n.el.parentNode) {
+    var box = notesBox(), k = skipKey(c), n = notes[k];
+    if (n && n.el.parentNode && !n.el.classList.contains('out')) {
       n.count++;
       n.el.querySelector('.abNoteCount').textContent = '\u00D7' + n.count;
+      n.el.classList.remove('bump'); void n.el.offsetWidth; n.el.classList.add('bump');
+      box.insertBefore(n.el, box.firstChild);
       clearTimeout(n.timer);
     } else {
       var el = document.createElement('div');

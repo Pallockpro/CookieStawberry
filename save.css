@@ -1,5 +1,5 @@
 /* Toolbar */
-#ssPanel{position:fixed;right:8px;bottom:8px;z-index:1000000;font:12px/1.35 Tahoma,Arial,sans-serif;color:#fff;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+#ssPanel{position:fixed;right:8px;bottom:8px;z-index:2147483000;font:12px/1.35 Tahoma,Arial,sans-serif;color:#fff;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
 #ssPanel button,#ssSplash button{padding:5px 8px;border:1px solid #876;border-radius:4px;background:#3a2a1e;color:#fff;cursor:pointer;font:inherit}
 #ssPanel button:hover,#ssSplash button:hover{background:#5a3f2c}
 #ssButtons{display:flex;gap:4px}
@@ -17,7 +17,7 @@
 #ssToast.show{opacity:1}
 
 /* Credits popup */
-#ssSplash{position:fixed;inset:0;z-index:1000001;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;font:14px/1.4 Tahoma,Arial,sans-serif;color:#fff}
+#ssSplash{position:fixed;inset:0;z-index:2147483001;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;font:14px/1.4 Tahoma,Arial,sans-serif;color:#fff}
 #ssSplash[hidden]{display:none}
 #ssSplashBox{background:#2a1c14;border:2px solid #c0596b;border-radius:10px;padding:22px 26px;max-width:360px;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.6)}
 #ssSplashIcon{font-size:44px}
@@ -38,7 +38,7 @@ body.ssHideTop #game{top:0!important}
 #ssSetBody{max-height:80vh;overflow-y:auto}
 
 /* FPS counter */
-#ssFpsMeter{position:fixed;left:6px;bottom:6px;z-index:1000000;background:rgba(0,0,0,.75);color:#7f7;font:bold 12px/1 monospace;padding:4px 6px;border-radius:4px;pointer-events:none}
+#ssFpsMeter{position:fixed;left:6px;bottom:6px;z-index:2147483000;background:rgba(0,0,0,.75);color:#7f7;font:bold 12px/1 monospace;padding:4px 6px;border-radius:4px;pointer-events:none}
 #ssFpsMeter.mid{color:#fd5}#ssFpsMeter.low{color:#f66}
 
 /* Touch: no double-tap zoom / tap delay / text selection when tapping fast */
